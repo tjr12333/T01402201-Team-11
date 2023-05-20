@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     private float dirX = 0f;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 8f;
+    [SerializeField] private LayerMask jumbleGround;
+    private BoxCollider2D coll;
     private SpriteRenderer sprite;
 
     private enum MovementState { idle, running, jumping, falling }
@@ -19,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+        coll = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -27,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
         dirX = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
 
-        if(Input.GetButtonDown("Jump")) {
+        if(Input.GetButtonDown("Jump") && IsGrounded()) {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             // 추후 여기 수정해서 스페이스 누르는 시간에 따라 점프하도록
         }
@@ -57,5 +60,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         anim.SetInteger("state", (int)state);
+    }
+
+    private bool IsGrounded()
+    {
+        return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumbleGround);
     }
 }
