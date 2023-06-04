@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private float leftWidth = -10;
     public float speed = 1f;
 
-    private enum MovementState { idle, running, jumping, falling }
+    private enum MovementState { idle, running, jumping, falling, ready }
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
         dirX = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
 
-        if(Input.GetButtonDown("Jump") && IsGrounded()) {
+        if(Input.GetKeyUp(KeyCode.Space) && IsGrounded()) {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             // 추후 여기 수정해서 스페이스 누르는 시간에 따라 점프하도록
         }
@@ -75,6 +75,12 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.idle;
         }
 
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Debug.Log("Space");
+            state = MovementState.ready;
+        }
+
         if (rb.velocity.y > .1f)
         {
             state = MovementState.jumping;
@@ -82,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.falling;
         }
 
+        // Debug.Log(state);
         anim.SetInteger("state", (int)state);
     }
 
