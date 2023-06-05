@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Logic
   layers:
   - Default
   - TransparentFX
@@ -46,4 +47,7 @@ TagManager:
     locked: 0
   - name: Terrain
     uniqueID: 1678318397
+    locked: 0
+  - name: UI
+    uniqueID: 534532029
     locked: 0
