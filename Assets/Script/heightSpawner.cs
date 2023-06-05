@@ -28,7 +28,7 @@ public class heightSpawner : MonoBehaviour
             {
                 timer += Time.deltaTime;
             }else{
-                Debug.Log(height_num);
+                // Debug.Log(height_num);
                 SpawnText();
                 timer = 0;
             }

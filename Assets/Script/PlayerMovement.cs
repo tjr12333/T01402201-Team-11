@@ -17,8 +17,13 @@ public class PlayerMovement : MonoBehaviour
     private float rightWidth = 10;
     private float leftWidth = -10;
     public float speed = 1f;
+    private float _maxTime=1f;  // 최대로 눌리는 시간
+    private float _pressTime;   // 눌렀을때 시간 
+    public GameObject jumpgauge;
+    private Animation _jumpgagueAnimation;
 
     private enum MovementState { idle, running, jumping, falling, ready }
+    private MovementState _currentState;
 
     // Start is called before the first frame update
     void Start()
@@ -27,20 +32,59 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         coll = GetComponent<BoxCollider2D>();
+
+        _currentState = MovementState.idle;
+        jumpgauge.SetActive(false);
+    }
+
+    private void DriveJump()
+    {
+        if (_currentState == MovementState.ready)
+        {
+            _pressTime += Time.deltaTime;
+            // _jumpgagueAnimation.Play();
+            Debug.Log(_pressTime);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        DriveJump();
+        
         dirX = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
 
         if(Input.GetKeyUp(KeyCode.Space) && IsGrounded()) {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            // rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             // 추후 여기 수정해서 스페이스 누르는 시간에 따라 점프하도록
+
+            jumpgauge.SetActive(false);
+            _pressTime = Mathf.Clamp(_pressTime, 0f, _maxTime); // 최소 0초에서 최대 1초 동안 점프 기준을 정함
+       
+        
+            float y = Mathf.Lerp(6f, 10f, _pressTime);
+            float x = Mathf.Lerp(1f, 7f, _pressTime);
+
+            Debug.Log(_pressTime);
+            Debug.Log(x);
+            Debug.Log(y);
+
+            
+            // 점프 이벤트
+            if (sprite.flipX) // 왼쪽 보고 있을 때 
+            {
+                rb.velocity = new Vector2(-x, y);
+            }
+            else // 오른쪽 보고 있을떄
+            {
+                rb.velocity = new Vector2(x, y);
+            }
+
+            _pressTime = 0f;
         }
         
-        Debug.Log(transform.position.x);
+        
 
         if(transform.position.x < leftWidth){
             transform.position = transform.position + (Vector3.right * 20);
@@ -63,33 +107,34 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateAnimationUpdate() 
     {
-        MovementState state;
+        // MovementState state;
 
         if (dirX > 0f) {
-            state = MovementState.running;
+            _currentState = MovementState.running;
             sprite.flipX = false;
         } else if (dirX < 0f) {
-            state = MovementState.running;
+            _currentState = MovementState.running;
             sprite.flipX = true;
         } else {
-            state = MovementState.idle;
+            _currentState = MovementState.idle;
         }
 
         if (Input.GetKey(KeyCode.Space))
         {
-            Debug.Log("Space");
-            state = MovementState.ready;
+            // Debug.Log("Space");
+            _currentState = MovementState.ready;
+            jumpgauge.SetActive(true);
         }
 
         if (rb.velocity.y > .1f)
         {
-            state = MovementState.jumping;
+            _currentState = MovementState.jumping;
         } else if (rb.velocity.y < -.1f) {
-            state = MovementState.falling;
+            _currentState = MovementState.falling;
         }
 
         // Debug.Log(state);
-        anim.SetInteger("state", (int)state);
+        anim.SetInteger("state", (int)_currentState);
     }
 
     private bool IsGrounded()
