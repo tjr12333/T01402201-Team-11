@@ -30,6 +30,6 @@ public class NewBehaviourScript : MonoBehaviour
         GameObject coin = Instantiate(goldCoin) as GameObject;
         coin.transform.parent = coinSet.transform;
         coin.transform.position = new Vector3(transform.position.x, Random.Range(-3.9f, 3.9f), 0);
-        coin.GetComponent<CoinMove>().coinSpeed = Random.Range(40, 100);
+        //coin.GetComponent<CoinMove>().coinSpeed = Random.Range(40, 100);
     }
 }

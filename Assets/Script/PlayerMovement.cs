@@ -22,6 +22,10 @@ public class PlayerMovement : MonoBehaviour
     public GameObject jumpgauge;
     private Animation _jumpgagueAnimation;
 
+    public bool playerIsActive = true;
+    private float deadLine = -5;
+    public Logic logic;
+
     private enum MovementState { idle, running, jumping, falling, ready }
     private MovementState _currentState;
 
@@ -35,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
 
         _currentState = MovementState.idle;
         jumpgauge.SetActive(false);
+
+        logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<Logic>();
     }
 
     private void DriveJump()
@@ -52,10 +58,13 @@ public class PlayerMovement : MonoBehaviour
     {
         DriveJump();
         
-        dirX = Input.GetAxis("Horizontal");
-        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+        if(playerIsActive)
+        {
+            dirX = Input.GetAxis("Horizontal");
+            rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+        }
 
-        if(Input.GetKeyUp(KeyCode.Space) && IsGrounded()) {
+        if(Input.GetKeyUp(KeyCode.Space) && IsGrounded() && playerIsActive) {
             // rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             // 추후 여기 수정해서 스페이스 누르는 시간에 따라 점프하도록
 
@@ -95,6 +104,12 @@ public class PlayerMovement : MonoBehaviour
         if(transform.position.y > startHeight)
         {
             gameIsActive = true;
+        }
+
+        if(transform.position.y < deadLine && playerIsActive){
+            playerIsActive = false;
+            gameIsActive = false;
+            logic.gameOver();
         }
 
         if(gameIsActive && IsGrounded())
@@ -141,4 +156,6 @@ public class PlayerMovement : MonoBehaviour
     {
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumbleGround);
     }
+
+
 }

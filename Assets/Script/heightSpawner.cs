@@ -9,7 +9,7 @@ public class heightSpawner : MonoBehaviour
     public GameObject textPrefab;
     public GameObject canvas;
     public float spawnRate = 2;
-    private float timer = 0;
+    private float timer = 100;
     public int height_num = 0;
     
 
