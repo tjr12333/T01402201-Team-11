@@ -20,7 +20,8 @@ public class PlayerMovement : MonoBehaviour
     private float _maxTime=1f;  // 최대로 눌리는 시간
     private float _pressTime;   // 눌렀을때 시간 
     public GameObject jumpgauge;
-    private Animation _jumpgagueAnimation;
+    private bool _canJump = true;   // 점프 가능 여부
+    private bool _canMove = true;  // 좌우 변경 가능 여부
 
     public bool playerIsActive = true;
     private float deadLine = -5;
@@ -48,51 +49,82 @@ public class PlayerMovement : MonoBehaviour
         if (_currentState == MovementState.ready)
         {
             _pressTime += Time.deltaTime;
-            // _jumpgagueAnimation.Play();
-            Debug.Log(_pressTime);
+            // Debug.Log(_pressTime);
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void CanMove()
     {
-        DriveJump();
-        
-        if(playerIsActive)
+        if (_currentState == MovementState.ready)
         {
-            dirX = Input.GetAxis("Horizontal");
-            rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+            moveSpeed = 0;
+        } 
+        else if (_currentState == MovementState.idle)
+        {
+            _canJump = true;
+            moveSpeed = 5f;
         }
+        else if (_currentState == MovementState.jumping || _currentState == MovementState.falling)
+        {
+            _canJump = false;
+        }
+    }
 
+    private void Jump()
+    {
         if(Input.GetKeyUp(KeyCode.Space) && IsGrounded() && playerIsActive) {
             // rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             // 추후 여기 수정해서 스페이스 누르는 시간에 따라 점프하도록
 
             jumpgauge.SetActive(false);
             _pressTime = Mathf.Clamp(_pressTime, 0f, _maxTime); // 최소 0초에서 최대 1초 동안 점프 기준을 정함
-       
         
-            float y = Mathf.Lerp(6f, 10f, _pressTime);
-            float x = Mathf.Lerp(1f, 7f, _pressTime);
-
-            Debug.Log(_pressTime);
-            Debug.Log(x);
-            Debug.Log(y);
-
+            float y = Mathf.Lerp(4f, 8f, _pressTime)/1.5f;
+            float x = Mathf.Lerp(2f, 6f, _pressTime)/1.5f;
             
             // 점프 이벤트
             if (sprite.flipX) // 왼쪽 보고 있을 때 
             {
-                rb.velocity = new Vector2(-x, y);
+                
+                // rb.velocity = new Vector2(-x, y);
+                JumpForce(new Vector2(-x, y));
+                Debug.Log("왼쪽" + rb.velocity);
             }
             else // 오른쪽 보고 있을떄
             {
-                rb.velocity = new Vector2(x, y);
+                // rb.velocity = new Vector2(x, y);
+                JumpForce(new Vector2(x, y));
+                Debug.Log("오른쪽" + rb.velocity);
             }
 
             _pressTime = 0f;
         }
-        
+    }
+    private void JumpForce(Vector2 maxHeightDisplacement)
+    {
+
+        // m*k*g*h = m*v^2/2 (단, k == gravityScale) <= 역학적 에너지 보존 법칙 적용
+        float v_y = Mathf.Sqrt(2 * rb.gravityScale * -Physics2D.gravity.y * maxHeightDisplacement.y);
+        // 포물선 운동 법칙 적용
+        float v_x = maxHeightDisplacement.x * v_y / (2 * maxHeightDisplacement.y);
+
+        Vector2 force = rb.mass * (new Vector2(v_x, v_y) - rb.velocity);
+        rb.AddForce(force, ForceMode2D.Impulse);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        DriveJump();
+        Jump();
+        CanMove();
+
+        if(playerIsActive)
+        {
+            dirX = Input.GetAxis("Horizontal");
+            // rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+            transform.position += Vector3.right * (dirX * Time.deltaTime * moveSpeed);
+        }
         
 
         if(transform.position.x < leftWidth){
@@ -136,9 +168,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
+            if (_canJump && IsGrounded()) 
+            {
             // Debug.Log("Space");
             _currentState = MovementState.ready;
             jumpgauge.SetActive(true);
+            }
         }
 
         if (rb.velocity.y > .1f)
@@ -148,7 +183,7 @@ public class PlayerMovement : MonoBehaviour
             _currentState = MovementState.falling;
         }
 
-        // Debug.Log(state);
+        // Debug.Log(_currentState);
         anim.SetInteger("state", (int)_currentState);
     }
 

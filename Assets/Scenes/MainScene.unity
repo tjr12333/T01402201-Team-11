@@ -9926,7 +9926,7 @@ PlatformEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2147483647
   m_RotationalOffset: 0
   m_UseOneWay: 0
   m_UseOneWayGrouping: 0
@@ -10934,7 +10934,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 2cee7990bcfaa4ec7a31f4bf682df7cc, type: 2}
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -11007,6 +11007,8 @@ MonoBehaviour:
   jumpgauge: {fileID: 1901824626}
   playerIsActive: 1
   logic: {fileID: 0}
+  defaultPhyMat: {fileID: 0}
+  bouncePhyMat: {fileID: 0}
 --- !u!1 &1306530409
 GameObject:
   m_ObjectHideFlags: 0

@@ -264,9 +264,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1367205437}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cb30b64e77689f4c98bfa5d9410434b, type: 3}
+  m_Script: {fileID: 11500000, guid: d0dce2162f5fd429ea76d1b7937f3ed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goldCoin: {fileID: 8947703433287852054, guid: 973e317634a4a456a8f78e52ec76e632, type: 3}
+  coinSet: {fileID: 8947703433287852054, guid: 973e317634a4a456a8f78e52ec76e632, type: 3}
+  productionTime: 0
 --- !u!4 &1367205439
 Transform:
   m_ObjectHideFlags: 0
