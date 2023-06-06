@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim;
     private float dirX = 0f;
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpForce = 10f;
+    // [SerializeField] private float jumpForce = 10f;
     [SerializeField] private LayerMask jumbleGround;
     private BoxCollider2D coll;
     private SpriteRenderer sprite;
