@@ -14,8 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer sprite;
     public bool gameIsActive = false;
     private float startHeight = 2;
-    private float rightWidth = 10;
-    private float leftWidth = -10;
+    // private float rightWidth = 10;
+    // private float leftWidth = -10;
     public float speed = 1f;
     private float _maxTime=1f;  // 최대로 눌리는 시간
     private float _pressTime;   // 눌렀을때 시간 
@@ -130,11 +130,11 @@ public class PlayerMovement : MonoBehaviour
         }
         
 
-        if(transform.position.x < leftWidth){
-            transform.position = transform.position + (Vector3.right * 20);
-        }else if (transform.position.x > rightWidth){
-            transform.position = transform.position + (Vector3.left * 20);
-        }
+        // if(transform.position.x < leftWidth){
+        //     transform.position = transform.position + (Vector3.right * 20);
+        // }else if (transform.position.x > rightWidth){
+        //     transform.position = transform.position + (Vector3.left * 20);
+        // }
 
         if(transform.position.y > startHeight)
         {
