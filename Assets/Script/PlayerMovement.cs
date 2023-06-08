@@ -59,14 +59,16 @@ public class PlayerMovement : MonoBehaviour
         {
             moveSpeed = 0;
         } 
-        else if (_currentState == MovementState.idle)
-        {
-            _canJump = true;
-            moveSpeed = 5f;
-        }
         else if (_currentState == MovementState.jumping || _currentState == MovementState.falling)
         {
             _canJump = false;
+            _canMove = false;
+        }
+        else
+        {
+            _canJump = true;
+            _canMove = true;
+            moveSpeed = 5f;
         }
     }
 
@@ -88,13 +90,13 @@ public class PlayerMovement : MonoBehaviour
                 
                 // rb.velocity = new Vector2(-x, y);
                 JumpForce(new Vector2(-x, y));
-                Debug.Log("왼쪽" + rb.velocity);
+                // Debug.Log("왼쪽" + rb.velocity);
             }
             else // 오른쪽 보고 있을떄
             {
                 // rb.velocity = new Vector2(x, y);
                 JumpForce(new Vector2(x, y));
-                Debug.Log("오른쪽" + rb.velocity);
+                // Debug.Log("오른쪽" + rb.velocity);
             }
 
             _pressTime = 0f;
@@ -102,7 +104,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void JumpForce(Vector2 maxHeightDisplacement)
     {
-
+        rb.gravityScale = 8; // 중력 조절, 이걸로 점프 속도 조절 가능함
+        // Debug.Log(rb.gravityScale);
         // m*k*g*h = m*v^2/2 (단, k == gravityScale) <= 역학적 에너지 보존 법칙 적용
         float v_y = Mathf.Sqrt(2 * rb.gravityScale * -Physics2D.gravity.y * maxHeightDisplacement.y);
         // 포물선 운동 법칙 적용
@@ -119,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
         Jump();
         CanMove();
 
-        if(playerIsActive)
+        if(playerIsActive && _canMove)
         {
             dirX = Input.GetAxis("Horizontal");
             // rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
@@ -156,23 +159,31 @@ public class PlayerMovement : MonoBehaviour
     {
         // MovementState state;
 
-        if (dirX > 0f) {
-            _currentState = MovementState.running;
-            sprite.flipX = false;
-        } else if (dirX < 0f) {
-            _currentState = MovementState.running;
-            sprite.flipX = true;
-        } else {
-            _currentState = MovementState.idle;
+        if (IsGrounded())
+        {
+            if (dirX > 0f)
+            {
+                _currentState = MovementState.running;
+                sprite.flipX = false;
+            }
+            else if (dirX < 0f)
+            {
+                _currentState = MovementState.running;
+                sprite.flipX = true;
+            }
+            else
+            {
+                _currentState = MovementState.idle;
+            }
         }
 
         if (Input.GetKey(KeyCode.Space))
         {
             if (_canJump && IsGrounded()) 
             {
-            // Debug.Log("Space");
-            _currentState = MovementState.ready;
-            jumpgauge.SetActive(true);
+                // Debug.Log("Space");
+                _currentState = MovementState.ready;
+                jumpgauge.SetActive(true);
             }
         }
 
