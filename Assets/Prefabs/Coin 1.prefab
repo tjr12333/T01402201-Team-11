@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1056136235691958728}
   - component: {fileID: 1056136235691958729}
   - component: {fileID: 7996545870792504597}
-  m_Layer: 0
+  - component: {fileID: 1723684437112433075}
+  m_Layer: 5
   m_Name: Coin 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,3 +127,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinEffectPrefab: {fileID: 2787114127320111125, guid: a07cbcaf3859942cca7244453eb9975f, type: 3}
   logic: {fileID: 0}
+--- !u!114 &1723684437112433075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056136235691958735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d63e6e52a5a26405795ae2908aa7aa48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  coinMoveSpeed: 1
+  coinDeadZone: -10
