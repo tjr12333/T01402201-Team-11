@@ -11,6 +11,7 @@ public class Logic : MonoBehaviour
     public Text ScoreTextScreen;
     public GameObject gameOverScreen;
     public GameObject ScoreTextBox;
+    [SerializeField] private AudioSource deathSoundEffect;
 
     private float elapsedTime = 0.0f;
 
@@ -42,6 +43,7 @@ public class Logic : MonoBehaviour
 
     public void gameOver()
     {
+        deathSoundEffect.Play();
         gameOverScreen.SetActive(true);
         ScoreTextBox.SetActive(false);
         UpdateTimeText();
