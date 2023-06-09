@@ -91,8 +91,8 @@ public class PlayerMovement : MonoBehaviour
             jumpgauge.SetActive(false);
             _pressTime = Mathf.Clamp(_pressTime, 0f, _maxTime); // 최소 0초에서 최대 1초 동안 점프 기준을 정함
         
-            float y = Mathf.Lerp(4f, 8f, _pressTime)/1.5f;
-            float x = Mathf.Lerp(2f, 6f, _pressTime)/1.5f;
+            float y = Mathf.Lerp(2f, 14f, _pressTime)/1.5f;
+            float x = Mathf.Lerp(2f, 10f, _pressTime)/1.5f;
             
             // 점프 이벤트
             if (sprite.flipX) // 왼쪽 보고 있을 때 
