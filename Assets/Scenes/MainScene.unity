@@ -10417,7 +10417,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 736421521}
-  - component: {fileID: 736421520}
+  - component: {fileID: 736421522}
   m_Layer: 0
   m_Name: Coin Spawner
   m_TagString: Untagged
@@ -10425,22 +10425,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &736421520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 736421519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acca3a36048014e84a7926885ddd06b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coin: {fileID: 1056136235691958735, guid: 67e974c0506f842f19d3fed20982aaa6, type: 3}
-  spawnRate: 5
-  heightOffset: 5
-  widthOffset: 9
 --- !u!4 &736421521
 Transform:
   m_ObjectHideFlags: 0
@@ -10456,6 +10440,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &736421522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736421519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acca3a36048014e84a7926885ddd06b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coin: {fileID: 1056136235691958735, guid: 67e974c0506f842f19d3fed20982aaa6, type: 3}
+  spawnRate: 3
+  heightOffset: 5
+  widthOffset: 8
 --- !u!1 &794858692
 GameObject:
   m_ObjectHideFlags: 0
@@ -11567,7 +11567,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

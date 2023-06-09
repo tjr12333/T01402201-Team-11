@@ -5,7 +5,7 @@ using UnityEngine;
 public class CoinSpawner : MonoBehaviour
 {
     public GameObject coin;
-    [SerializeField]public float spawnRate = 5;
+    [SerializeField]public float spawnRate = 3;
     private float timer = 0;
     // Start is called before the first frame update
     void Start()
@@ -26,7 +26,7 @@ public class CoinSpawner : MonoBehaviour
     }
 
     public float heightOffset = 5;
-    public float widthOffset = 9;
+    public float widthOffset = 8;
 
     void spawnCoin()
     {
