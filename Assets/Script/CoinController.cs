@@ -21,13 +21,13 @@ public class CoinController : MonoBehaviour
         transform.Rotate(Vector3.down * rotateSpeed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D collisoin) {
+    private void OnTriggerEnter2D(Collider2D collision) {
         // 코인 오브젝트 획득 효과 (coinEffectPrefabs) 생성
         // GameObject clone = Instantiate(coinEffectPrefab);
         // clone.transform.position = transform.position;
         
         // 점수 획득
-        if (collisoin.gameObject.layer == 7) {
+        if (collision.gameObject.layer == 7) {
             logic.addScore(1);
         }
 
