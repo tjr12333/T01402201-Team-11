@@ -5,20 +5,21 @@ using UnityEngine;
 public class PlatformSpawn : MonoBehaviour
 {
     public PlayerMovement player;
-    public Logic logic;
     public GameObject platform; // 파이프 게임 오브젝트
     public GameObject platform1;
     public float spawnRate = 5; // 파이프 생성 속도
     private float timer = 0; // 타이머 변수
+    private float allTime = 0.0f;
 
     float[] values = {4, 9, -4, -8, 0};
+    float[] values1 = {-7, -3, 0, 3, 7};
     float randomValue;
     float previousValue;  //   이전에 선택된 값 저장 변수
 
     // Start 함수는 첫 번째 프레임 이전에 실행됩니다.
     void Start()
     {
-        logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<Logic>();
+        
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         spawnPlatform(); // 파이프 생성 함수 호출
     }
@@ -34,7 +35,7 @@ public class PlatformSpawn : MonoBehaviour
             }
             else
             {
-                if(logic.elapsedTime/60f < 1){
+                if(allTime / 60f < 1.1){
                     spawnPlatform(); // 파이프 생성 함수 호출
                 }else{
                     spawnPlatform1();
@@ -42,6 +43,7 @@ public class PlatformSpawn : MonoBehaviour
                 
                 timer = 0; // 타이머 초기화
             }
+            allTime += Time.deltaTime;
         }
     }
 
@@ -74,7 +76,7 @@ public class PlatformSpawn : MonoBehaviour
     {
         while(true)
         {
-            randomValue = values[Random.Range(0, values.Length)];
+            randomValue = values1[Random.Range(0, values.Length)];
             if(randomValue != previousValue){
                 break;
             }
@@ -82,7 +84,7 @@ public class PlatformSpawn : MonoBehaviour
 
         previousValue = randomValue;
 
-        Instantiate(platform1, new Vector3(transform.position.x + previousValue,transform.position.y,0), transform.rotation);
+        Instantiate(platform1, new Vector3(transform.position.x + previousValue,transform.position.y+3,0), transform.rotation);
     }
 }
 

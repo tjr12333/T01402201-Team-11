@@ -12,7 +12,7 @@ public class Logic : MonoBehaviour
     public GameObject gameOverScreen;
     public GameObject ScoreTextBox;
 
-    public float elapsedTime = 0.0f;
+    private float elapsedTime = 0.0f;
 
     private void Update()
     {
