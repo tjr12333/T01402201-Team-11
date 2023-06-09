@@ -12441,6 +12441,7 @@ MonoBehaviour:
   ScoreTextScreen: {fileID: 1092416169}
   gameOverScreen: {fileID: 654140295}
   ScoreTextBox: {fileID: 114324106}
+  elapsedTime: 0
 --- !u!4 &2010921021
 Transform:
   m_ObjectHideFlags: 0
@@ -12501,7 +12502,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1283653027}
+  logic: {fileID: 0}
   platform: {fileID: 3029760152902803805, guid: 68a8c2250b40f6b438a81b8070e72d6f, type: 3}
+  platform1: {fileID: 3029760152902803805, guid: 7d4e6c9a2aec14c4d88d15f433de15bf, type: 3}
   spawnRate: 4
   offset: 7
 --- !u!1 &2032372372
