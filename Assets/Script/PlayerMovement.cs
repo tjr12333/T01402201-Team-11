@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     public TilemapCollider2D tilemapCollider;
 
     private bool isJumping = false;
-
+    [SerializeField] private AudioSource jumpSoundEffect;
     // Start is called before the first frame update
     void Start()
     {
@@ -109,6 +109,7 @@ public class PlayerMovement : MonoBehaviour
                 // Debug.Log("오른쪽" + rb.velocity);
             }
 
+            jumpSoundEffect.Play();
             _pressTime = 0f;
         }
     }
