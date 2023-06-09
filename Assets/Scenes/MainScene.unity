@@ -10663,35 +10663,9 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 866332465}
-    m_ColliderPaths:
-    - - X: 100000000
-        Y: 170000000
-      - X: 90000000
-        Y: 170000000
-      - X: 90000000
-        Y: -60000000
-      - X: 100000000
-        Y: -60000000
-    - - X: -90000000
-        Y: 170000000
-      - X: -100000000
-        Y: 170000000
-      - X: -100000000
-        Y: -60000000
-      - X: -90000000
-        Y: -60000000
+  m_ColliderPaths: []
   m_CompositePaths:
-    m_Paths:
-    - - {x: 9.99997, y: -6}
-      - {x: 9.99997, y: 17}
-      - {x: 9, y: 16.999971}
-      - {x: 9.00003, y: -6}
-    - - {x: -9.00003, y: -6}
-      - {x: -9.00003, y: 17}
-      - {x: -10, y: 16.999971}
-      - {x: -9.99997, y: -6}
+    m_Paths: []
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!50 &866332464
@@ -10724,10 +10698,10 @@ TilemapCollider2D:
   m_GameObject: {fileID: 866332460}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: cb345de5fcd6de84baead9a7a77901a0, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
@@ -11776,6 +11750,11 @@ MonoBehaviour:
   jumpgauge: {fileID: 1901824626}
   playerIsActive: 1
   logic: {fileID: 0}
+  wallBounceForce: 3
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  tilemapCollider: {fileID: 0}
 --- !u!1 &1306530409
 GameObject:
   m_ObjectHideFlags: 0

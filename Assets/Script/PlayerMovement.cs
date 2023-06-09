@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -29,6 +33,12 @@ public class PlayerMovement : MonoBehaviour
 
     private enum MovementState { idle, running, jumping, falling, ready }
     private MovementState _currentState;
+
+    public float wallBounceForce = 3f;
+    public LayerMask groundLayer;
+    public TilemapCollider2D tilemapCollider;
+
+    private bool isJumping = false;
 
     // Start is called before the first frame update
     void Start()
@@ -122,7 +132,12 @@ public class PlayerMovement : MonoBehaviour
         Jump();
         CanMove();
 
-        if(playerIsActive && _canMove)
+        if (!isJumping && IsGrounded() && Input.GetButtonDown("Jump"))
+        {
+            Jump();
+        }
+
+        if (playerIsActive && _canMove)
         {
             dirX = Input.GetAxis("Horizontal");
             // rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
@@ -203,5 +218,31 @@ public class PlayerMovement : MonoBehaviour
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, jumbleGround);
     }
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void FixedUpdate()
+    {
+        if (isJumping)
+        {
+            ApplyGravity();
+        }
+    }
+    private void ApplyGravity()
+    {
+        rb.gravityScale = 1f;
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Tilemap"))
+        {
+            Vector2 contactPoint = collision.GetContact(0).point;
+            Vector2 normal = collision.GetContact(0).normal;
+            Vector2 bounceDirection = Vector2.Reflect(rb.velocity.normalized, normal);
+            rb.velocity = bounceDirection * wallBounceForce;
+        }
+    }
 
 }
