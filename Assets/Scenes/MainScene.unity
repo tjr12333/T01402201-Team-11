@@ -10076,6 +10076,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   speed: 1
+  height: {fileID: 0}
 --- !u!1 &321193588
 GameObject:
   m_ObjectHideFlags: 0
@@ -10581,10 +10582,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coin: {fileID: 1056136235691958735, guid: 67e974c0506f842f19d3fed20982aaa6, type: 3}
-  spawnRate: 0.5
+  spawnRate: 3
   player: {fileID: 0}
   heightOffset: 5
-  widthOffset: 8
+  widthOffset: 8.3
 --- !u!1 &794858692
 GameObject:
   m_ObjectHideFlags: 0
@@ -11887,8 +11888,6 @@ MonoBehaviour:
     m_Bits: 0
   tilemapCollider: {fileID: 0}
   jumpSoundEffect: {fileID: 1403903001}
-  readySoundEffect: {fileID: 0}
-  coinSoundEffect: {fileID: 0}
 --- !u!1 &1306530409
 GameObject:
   m_ObjectHideFlags: 0
@@ -12414,7 +12413,7 @@ GameObject:
   - component: {fileID: 1707170618}
   m_Layer: 5
   m_Name: height Spawner
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
